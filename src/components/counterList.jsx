@@ -11,6 +11,7 @@ const CounterList = () => {
   ]);
 
   const handleDelete = () => {};
+
   return (
     <>
       {counters.map((count) => (
