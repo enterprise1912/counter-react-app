@@ -10,14 +10,6 @@ const CounterList = () => {
     { id: 4, value: 0, name: "Minimalist's kit" },
   ];
 
-  const updatedState = [
-    { id: 0, value: 1, name: "Useless item" },
-    { id: 1, value: 2, name: "Spoon" },
-    { id: 2, value: 3, name: "Fork" },
-    { id: 3, value: 4, name: "Plate" },
-    { id: 4, value: 5, name: "Minimalist's kit" },
-  ];
-
   const [counters, setCounters] = useState(initialState);
 
   const handleDelete = (id) => {
@@ -29,20 +21,37 @@ const CounterList = () => {
     setCounters(initialState);
   };
 
-  const handleUpdate = () => {
-    setCounters(updatedState);
+  const handleIncrement = (id) => {
+    setCounters((prevState) =>
+      prevState.map((c) => ({
+        ...c,
+        value: (c.value += c.id === id ? 1 : 0),
+      }))
+    );
+  };
+
+  const handleDecrement = (id) => {
+    setCounters((prevState) =>
+      prevState.map((c) => ({
+        ...c,
+        value: (c.value -= c.id === id ? 1 : 0),
+      }))
+    );
   };
 
   return (
     <>
       {counters.map((count) => (
-        <Counter key={count.id} onDelete={handleDelete} {...count} />
+        <Counter
+          key={count.id}
+          onDelete={handleDelete}
+          onIncrement={handleIncrement}
+          onDecrement={handleDecrement}
+          {...count}
+        />
       ))}
       <button className="btn btn-primary btn-sm m-2" onClick={handleReset}>
         Reset
-      </button>
-      <button className="btn btn-primary btn-sm m-2" onClick={handleUpdate}>
-        Update State
       </button>
     </>
   );
